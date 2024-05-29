@@ -1,0 +1,13 @@
+<div>
+  <input type="text" [(ngModel)]="searchQuery" placeholder="Wpisz szukany przepis" (keyup.enter)="loadRecipes()">
+  <button (click)="loadRecipes()">Szukaj</button>
+</div>
+
+<div *ngIf="recipes.length" class="recipes-container">
+  <ul>
+    <li *ngFor="let recipe of recipes">
+      {{ recipe.title }}
+      <img [src]="recipe.image" alt="{{ recipe.title }}">
+    </li>
+  </ul>
+</div>
