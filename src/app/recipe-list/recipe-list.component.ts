@@ -8,42 +8,11 @@ import {RecipeService} from "../recipe.service";
 })
 export class RecipeListComponent implements OnInit {
 
-  searchQuery: string = '';
-
-  recipes: any[] = [];
-
-  isLoading: boolean = false;
-
-  constructor(private recipeService: RecipeService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.loadRecipes();
+
   }
 
-  loadRecipes(): void {
-    if (!this.searchQuery.trim()){
-      this.recipes = [];
-      return;
-    }
-
-    this.isLoading = true;
-
-    this.recipeService.getRecipes(this.searchQuery).subscribe(
-      (response) => {
-        if (response?.results) {
-          this.recipes = response.results;
-        } else {
-          this.recipes = [];
-        }
-      },
-      (error) => {
-        console.error('Error fetching recipes', error);
-        this.recipes = [];
-      },
-      () => {
-        this.isLoading = false;
-      }
-    );
-  }
 
 }
