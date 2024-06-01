@@ -1,0 +1,57 @@
+<div class="main-container">
+  <div class="sidebar">
+    <mat-nav-list>
+      <mat-list-item (click)="showCarousel()"><mat-icon>home</mat-icon>Home</mat-list-item>
+      <mat-list-item><mat-icon>explore</mat-icon>Explore</mat-list-item>
+      <mat-list-item><mat-icon>group</mat-icon>Community</mat-list-item>
+      <mat-list-item><mat-icon>favorite</mat-icon>Favorites</mat-list-item>
+      <mat-list-item><mat-icon>help</mat-icon>Help</mat-list-item>
+      <mat-list-item><mat-icon>settings</mat-icon>Settings</mat-list-item>
+    </mat-nav-list>
+    <button mat-raised-button color="primary" class="subscribe-button">Subscribe Now</button>
+  </div>
+  <div class="content">
+    <mat-card>
+      <mat-card-content>
+        <mat-form-field class="search-field" appearance="fill">
+          <mat-label>What do you want to cook today?</mat-label>
+          <input matInput [(ngModel)]="searchQuery">
+          <button mat-raised-button color="primary" matSuffix (click)="loadRecipes()">Search</button>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <div *ngIf="!searchActive">
+      <h2>Salads</h2>
+      <div *ngIf="saladRecipes.length > 0; else noRecipes">
+        <owl-carousel-o [options]="customOptions" class="owl-theme">
+          <ng-container *ngFor="let recipe of saladRecipes">
+            <ng-template carouselSlide>
+              <mat-card class="recipe-card">
+                <img mat-card-image [src]="recipe.image" alt="{{ recipe.title }}">
+                <mat-card-header>
+                  <mat-card-title>{{ recipe.title }}</mat-card-title>
+                </mat-card-header>
+              </mat-card>
+            </ng-template>
+          </ng-container>
+        </owl-carousel-o>
+      </div>
+      <ng-template #noRecipes>
+        <p>No recipes to show</p>
+      </ng-template>
+    </div>
+
+    <div *ngIf="searchActive">
+      <h2>Search results</h2>
+      <div class="search-results">
+        <mat-card *ngFor="let recipe of searchResults" class="recipe-card">
+          <img mat-card-image [src]="recipe.image" alt="{{ recipe.title }}">
+          <mat-card-header>
+            <mat-card-title>{{ recipe.title }}</mat-card-title>
+          </mat-card-header>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
