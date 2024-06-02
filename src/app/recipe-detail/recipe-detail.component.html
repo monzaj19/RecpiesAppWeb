@@ -1,0 +1,34 @@
+<div class="main-container">
+  <div class="sidebar">
+    <mat-nav-list>
+      <mat-list-item routerLink="/"><mat-icon>home</mat-icon>Home</mat-list-item>
+      <mat-list-item><mat-icon>explore</mat-icon>Explore</mat-list-item>
+      <mat-list-item><mat-icon>group</mat-icon>Community</mat-list-item>
+      <mat-list-item><mat-icon>favorite</mat-icon>Favorites</mat-list-item>
+      <mat-list-item><mat-icon>help</mat-icon>Help</mat-list-item>
+      <mat-list-item><mat-icon>settings</mat-icon>Settings</mat-list-item>
+    </mat-nav-list>
+    <button mat-raised-button color="primary" class="subscribe-button">Subscribe Now</button>
+  </div>
+  <div class="content">
+    <mat-card *ngIf="recipe">
+      <mat-card-header>
+        <mat-card-title>{{ recipe.title }}</mat-card-title>
+      </mat-card-header>
+      <img mat-card-image [src]="recipe.image" alt="{{ recipe.title }}" class="recipe-image">
+      <mat-card-content>
+        <div class="recipe-details">
+          <p><strong>Time:</strong> {{ recipe.readyInMinutes }} minutes</p>
+          <p><strong>Servings:</strong> {{ recipe.servings }}</p>
+          <p><strong>Category:</strong> {{ recipe.dishTypes?.join(', ') }}</p>
+          <p><strong>Diet:</strong> {{ recipe.diets?.join(', ') }}</p>
+          <p><strong>Ingredients:</strong></p>
+          <ul>
+            <li *ngFor="let ingredient of recipe.extendedIngredients">{{ ingredient.original }}</li>
+          </ul>
+          <div [innerHTML]="sanitizedInstructions"></div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

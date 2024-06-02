@@ -17,13 +17,16 @@ import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {CarouselModule} from "ngx-owl-carousel-o";
+import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
     AppComponent,
     RecipeListComponent,
     HeaderComponent,
-    MainPageComponent
+    MainPageComponent,
+    RecipeDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import {CarouselModule} from "ngx-owl-carousel-o";
     MatCardModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    CarouselModule
+    CarouselModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

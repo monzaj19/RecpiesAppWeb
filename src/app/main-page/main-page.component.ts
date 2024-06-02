@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../recipe.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-main-page',
@@ -19,7 +20,7 @@ export class MainPageComponent implements OnInit {
     dots: true
   };
 
-  constructor(private recipeService: RecipeService) {}
+  constructor(private recipeService: RecipeService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadSaladRecipes();
@@ -29,13 +30,11 @@ export class MainPageComponent implements OnInit {
     const query = 'salad';
     this.recipeService.getRecipes(query).subscribe(
       (response) => {
-        console.log('Salad Recipes Response:', response);
         if (response && response.results) {
           this.saladRecipes = response.results.map((recipe: { image: any; }) => ({
             ...recipe,
             image: recipe.image || 'https://via.placeholder.com/300x200'
           }));
-          console.log('Salad Recipes:', this.saladRecipes);
         } else {
           this.saladRecipes = [];
           console.log('No recipes found');
@@ -62,7 +61,6 @@ export class MainPageComponent implements OnInit {
             image: recipe.image || 'https://via.placeholder.com/300x200'
           }));
           this.searchActive = true;
-          console.log('Search Results:', this.searchResults);
         } else {
           this.searchResults = [];
           this.searchActive = false;
@@ -79,6 +77,10 @@ export class MainPageComponent implements OnInit {
 
   showCarousel(): void {
     this.searchActive = false;
-    console.log('Showing Carousel');
+    this.router.navigate(['/recipes']);
+  }
+
+  viewRecipeDetails(recipeId: number): void {
+    this.router.navigate(['/recipe', recipeId]);
   }
 }

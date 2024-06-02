@@ -27,7 +27,7 @@
         <owl-carousel-o [options]="customOptions" class="owl-theme">
           <ng-container *ngFor="let recipe of saladRecipes">
             <ng-template carouselSlide>
-              <mat-card class="recipe-card">
+              <mat-card class="recipe-card" (click)="viewRecipeDetails(recipe.id)">
                 <img mat-card-image [src]="recipe.image" alt="{{ recipe.title }}">
                 <mat-card-header>
                   <mat-card-title>{{ recipe.title }}</mat-card-title>
@@ -45,7 +45,7 @@
     <div *ngIf="searchActive">
       <h2>Search results</h2>
       <div class="search-results">
-        <mat-card *ngFor="let recipe of searchResults" class="recipe-card">
+        <mat-card *ngFor="let recipe of searchResults" class="recipe-card" (click)="viewRecipeDetails(recipe.id)">
           <img mat-card-image [src]="recipe.image" alt="{{ recipe.title }}">
           <mat-card-header>
             <mat-card-title>{{ recipe.title }}</mat-card-title>
