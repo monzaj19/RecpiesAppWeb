@@ -9,9 +9,17 @@
       <mat-list-item><mat-icon>settings</mat-icon>Settings</mat-list-item>
     </mat-nav-list>
     <button mat-raised-button color="primary" class="subscribe-button">Subscribe Now</button>
+    <div *ngIf="user$ | async as user; else loggedOut">
+      <p>Welcome, {{ user.displayName }}</p>
+      <button (click)="logout()">Logout</button>
+      <button (click)="goToProfile()">My Profile</button>
+    </div>
+    <ng-template #loggedOut>
+      <button (click)="login()">Login with Google</button>
+    </ng-template>
   </div>
   <div class="content">
-    <mat-card>
+    <mat-card *ngIf="!isProfilePage">
       <mat-card-content>
         <mat-form-field class="search-field" appearance="fill">
           <mat-label>What do you want to cook today?</mat-label>
@@ -20,38 +28,26 @@
         </mat-form-field>
       </mat-card-content>
     </mat-card>
-
-    <div *ngIf="!searchActive">
-      <h2>Salads</h2>
-      <div *ngIf="saladRecipes.length > 0; else noRecipes">
-        <owl-carousel-o [options]="customOptions" class="owl-theme">
-          <ng-container *ngFor="let recipe of saladRecipes">
-            <ng-template carouselSlide>
-              <mat-card class="recipe-card" (click)="viewRecipeDetails(recipe.id)">
-                <img mat-card-image [src]="recipe.image" alt="{{ recipe.title }}">
-                <mat-card-header>
-                  <mat-card-title>{{ recipe.title }}</mat-card-title>
-                </mat-card-header>
-              </mat-card>
-            </ng-template>
-          </ng-container>
-        </owl-carousel-o>
-      </div>
+    <div *ngIf="!isProfilePage">
+      <h2 *ngIf="searchActive">Salads</h2>
+      <owl-carousel-o [options]="customOptions" class="owl-theme" *ngIf="saladRecipes.length > 0; else noRecipes">
+        <ng-container *ngFor="let recipe of saladRecipes">
+          <ng-template carouselSlide>
+            <mat-card class="recipe-card" (click)="viewRecipeDetails(recipe.id)">
+              <img mat-card-image [src]="recipe.image" alt="{{ recipe.title }}">
+              <mat-card-header>
+                <mat-card-title>{{ recipe.title }}</mat-card-title>
+              </mat-card-header>
+            </mat-card>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
       <ng-template #noRecipes>
         <p>No recipes to show</p>
       </ng-template>
     </div>
-
-    <div *ngIf="searchActive">
-      <h2>Search results</h2>
-      <div class="search-results">
-        <mat-card *ngFor="let recipe of searchResults" class="recipe-card" (click)="viewRecipeDetails(recipe.id)">
-          <img mat-card-image [src]="recipe.image" alt="{{ recipe.title }}">
-          <mat-card-header>
-            <mat-card-title>{{ recipe.title }}</mat-card-title>
-          </mat-card-header>
-        </mat-card>
-      </div>
+    <div *ngIf="isProfilePage">
+      <app-user-profile></app-user-profile>
     </div>
   </div>
 </div>

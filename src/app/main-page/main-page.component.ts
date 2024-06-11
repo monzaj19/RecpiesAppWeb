@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../recipe.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import {Router} from "@angular/router";
+import {Observable} from "rxjs";
+import firebase from "firebase/compat";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-main-page',
@@ -13,6 +16,8 @@ export class MainPageComponent implements OnInit {
   searchResults: any[] = [];
   searchQuery: string = '';
   searchActive: boolean = false;
+  isProfilePage: boolean = false;
+  user$: Observable<firebase.User | null>;
   customOptions: OwlOptions = {
     loop: true,
     margin: -100,
@@ -20,10 +25,23 @@ export class MainPageComponent implements OnInit {
     dots: true
   };
 
-  constructor(private recipeService: RecipeService, private router: Router) {}
+  constructor(
+    private recipeService: RecipeService,
+    private router: Router,
+    private authService: AuthService) {
+    this.user$ = this.authService.user$;
+  }
 
   ngOnInit(): void {
     this.loadSaladRecipes();
+  }
+
+  login(): void {
+    this.authService.loginWithGoogle();
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
   loadSaladRecipes(): void {
@@ -75,8 +93,13 @@ export class MainPageComponent implements OnInit {
     );
   }
 
+  goToProfile(): void {
+    this.isProfilePage = true;
+  }
+
   showCarousel(): void {
     this.searchActive = false;
+    this.isProfilePage = false;
     this.router.navigate(['/recipes']);
   }
 

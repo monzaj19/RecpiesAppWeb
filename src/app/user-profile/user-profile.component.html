@@ -1,0 +1,7 @@
+<div class="user-profile">
+  <h2>User Profile</h2>
+  <p *ngIf="user$ | async as user">
+    <strong>Name:</strong> {{ user.displayName }}<br>
+    <strong>Email:</strong> {{ user.email }}
+  </p>
+</div>

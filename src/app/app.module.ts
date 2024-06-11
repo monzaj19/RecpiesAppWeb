@@ -23,6 +23,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AuthGuard } from './auth.guard';
     HeaderComponent,
     MainPageComponent,
     RecipeDetailComponent,
-    LoginComponent
+    LoginComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

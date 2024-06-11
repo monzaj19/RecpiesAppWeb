@@ -8,16 +8,6 @@ import firebase from 'firebase/compat/app';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent implements OnInit {
-  user$: Observable<firebase.User | null>;
+export class AppComponent {
 
-  constructor(private authService: AuthService) {
-    this.user$ = this.authService.user$;
-  }
-
-  ngOnInit(): void {}
-
-  logout(): void {
-    this.authService.logout();
-  }
 }
