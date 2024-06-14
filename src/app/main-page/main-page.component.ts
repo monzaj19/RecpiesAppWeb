@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../recipe.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import {Router} from "@angular/router";
-import {Observable} from "rxjs";
-import firebase from "firebase/compat";
-import {AuthService} from "../auth.service";
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import firebase from 'firebase/compat';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-main-page',
@@ -73,6 +73,7 @@ export class MainPageComponent implements OnInit {
 
     this.recipeService.getRecipes(this.searchQuery).subscribe(
       (response) => {
+        console.log('Search response:', response); // Dodajemy logowanie
         if (response && response.results) {
           this.searchResults = response.results.map((recipe: { image: any; }) => ({
             ...recipe,

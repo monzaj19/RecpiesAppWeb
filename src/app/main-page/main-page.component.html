@@ -1,6 +1,16 @@
 <div class="main-container">
   <div class="sidebar">
     <mat-nav-list>
+      <div class="user-info">
+        <div *ngIf="user$ | async as user; else loggedOut">
+          <p>Welcome, {{ user.displayName }}</p>
+          <button mat-raised-button color="accent" class="logout-button" (click)="logout()">Logout</button>
+          <button mat-raised-button color="primary" class="profile-button" (click)="goToProfile()">My Profile</button>
+        </div>
+        <ng-template #loggedOut>
+          <button mat-raised-button color="primary" class="profile-button" (click)="login()">Login with Google</button>
+        </ng-template>
+      </div>
       <mat-list-item (click)="showCarousel()"><mat-icon>home</mat-icon>Home</mat-list-item>
       <mat-list-item><mat-icon>explore</mat-icon>Explore</mat-list-item>
       <mat-list-item><mat-icon>group</mat-icon>Community</mat-list-item>
@@ -9,28 +19,24 @@
       <mat-list-item><mat-icon>settings</mat-icon>Settings</mat-list-item>
     </mat-nav-list>
     <button mat-raised-button color="primary" class="subscribe-button">Subscribe Now</button>
-    <div *ngIf="user$ | async as user; else loggedOut">
-      <p>Welcome, {{ user.displayName }}</p>
-      <button (click)="logout()">Logout</button>
-      <button (click)="goToProfile()">My Profile</button>
-    </div>
-    <ng-template #loggedOut>
-      <button (click)="login()">Login with Google</button>
-    </ng-template>
   </div>
   <div class="content">
     <mat-card *ngIf="!isProfilePage">
       <mat-card-content>
-        <mat-form-field class="search-field" appearance="fill">
-          <mat-label>What do you want to cook today?</mat-label>
-          <input matInput [(ngModel)]="searchQuery">
-          <button mat-raised-button color="primary" matSuffix (click)="loadRecipes()">Search</button>
-        </mat-form-field>
+        <div class="search-field">
+          <mat-form-field appearance="fill">
+            <mat-label>What do you want to cook today?</mat-label>
+            <input matInput [(ngModel)]="searchQuery">
+          </mat-form-field>
+          <button mat-raised-button color="primary" (click)="loadRecipes()">Search</button>
+        </div>
       </mat-card-content>
     </mat-card>
-    <div *ngIf="!isProfilePage">
-      <h2 *ngIf="searchActive">Salads</h2>
-      <owl-carousel-o [options]="customOptions" class="owl-theme" *ngIf="saladRecipes.length > 0; else noRecipes">
+
+
+    <div *ngIf="!isProfilePage && !searchActive">
+      <h2 *ngIf="saladRecipes.length > 0">Salads</h2>
+      <owl-carousel-o [options]="customOptions" *ngIf="saladRecipes.length > 0; else noRecipes">
         <ng-container *ngFor="let recipe of saladRecipes">
           <ng-template carouselSlide>
             <mat-card class="recipe-card" (click)="viewRecipeDetails(recipe.id)">
@@ -46,6 +52,22 @@
         <p>No recipes to show</p>
       </ng-template>
     </div>
+
+    <div *ngIf="searchActive">
+      <h2>Search results</h2>
+      <div class="search-results" *ngIf="searchResults.length > 0; else noSearchResults">
+        <mat-card *ngFor="let recipe of searchResults" class="recipe-card" (click)="viewRecipeDetails(recipe.id)">
+          <img mat-card-image [src]="recipe.image" alt="{{ recipe.title }}">
+          <mat-card-header>
+            <mat-card-title>{{ recipe.title }}</mat-card-title>
+          </mat-card-header>
+        </mat-card>
+      </div>
+      <ng-template #noSearchResults>
+        <p>No search results found</p>
+      </ng-template>
+    </div>
+
     <div *ngIf="isProfilePage">
       <app-user-profile></app-user-profile>
     </div>
