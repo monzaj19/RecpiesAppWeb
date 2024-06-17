@@ -10,10 +10,25 @@ import firebase from 'firebase/compat/app';
 })
 export class UserProfileComponent implements OnInit {
   user$: Observable<firebase.User | null>;
+  favoriteRecipes: any[] = [];
 
   constructor(private authService: AuthService) {
     this.user$ = this.authService.user$;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.user$.subscribe(user => {
+      if (user) {
+        this.loadFavoriteRecipes(user.uid);
+      }
+    });
+  }
+
+  loadFavoriteRecipes(uid: string): void {
+    this.authService.getFavorites().subscribe(favorites => {
+      this.favoriteRecipes = favorites;
+      console.log('Loaded favorite recipes:', this.favoriteRecipes);
+    });
+  }
+
 }

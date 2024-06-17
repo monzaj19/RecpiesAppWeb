@@ -14,14 +14,31 @@
 .mat-list-base .mat-list-item
   color: #000000
 
+.user-info
+  width: 100%
+  text-align: center
+
 .subscribe-button
   width: 100%
   margin-top: 20px
 
 .content
-  flex: 1
+  position: relative
   padding: 20px
   overflow: auto
+
+  .favorite-button
+    position: absolute
+    top: 16px
+    right: 16px
+    z-index: 10
+    background: none
+    border: none
+    color: #fff
+    cursor: pointer
+
+  .mat-icon
+    font-size: 24px
 
 .recipe-image
   max-width: 500px
@@ -30,9 +47,4 @@
 
 .recipe-details
   p
-    margin: 10px 0
-  ul
-    list-style: disc
-    padding-left: 20px
-    li
-      margin: 5px 0
+    margin: 8px 0

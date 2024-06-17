@@ -4,4 +4,15 @@
     <strong>Name:</strong> {{ user.displayName }}<br>
     <strong>Email:</strong> {{ user.email }}
   </p>
+
+  <h3>Favorites</h3>
+  <div *ngIf="favoriteRecipes.length > 0; else noFavorites">
+    <div *ngFor="let recipe of favoriteRecipes" class="recipe-card">
+      <h4>{{ recipe.title }}</h4>
+      <img [src]="recipe.image" alt="{{ recipe.title }}">
+    </div>
+  </div>
+  <ng-template #noFavorites>
+    <p>You have no favorite recipes.</p>
+  </ng-template>
 </div>

@@ -1,6 +1,16 @@
 <div class="main-container">
   <div class="sidebar">
     <mat-nav-list>
+      <div class="user-info">
+        <div *ngIf="user$ | async as user; else loggedOut">
+          <p>Welcome, {{ user.displayName }}</p>
+          <button mat-raised-button color="accent" class="logout-button" (click)="logout()">Logout</button>
+          <button mat-raised-button color="primary" class="profile-button" (click)="goToProfile()">My Profile</button>
+        </div>
+        <ng-template #loggedOut>
+          <button mat-raised-button color="primary" class="profile-button" (click)="login()">Login with Google</button>
+        </ng-template>
+      </div>
       <mat-list-item routerLink="/"><mat-icon>home</mat-icon>Home</mat-list-item>
       <mat-list-item><mat-icon>explore</mat-icon>Explore</mat-list-item>
       <mat-list-item><mat-icon>group</mat-icon>Community</mat-list-item>
@@ -11,12 +21,15 @@
     <button mat-raised-button color="primary" class="subscribe-button">Subscribe Now</button>
   </div>
   <div class="content">
-    <mat-card *ngIf="recipe">
-      <mat-card-header>
-        <mat-card-title>{{ recipe.title }}</mat-card-title>
-      </mat-card-header>
-      <img mat-card-image [src]="recipe.image" alt="{{ recipe.title }}" class="recipe-image">
-      <mat-card-content>
+    <div class="recipe-container" *ngIf="recipe">
+      <mat-card>
+        <div class="card-header">
+          <mat-card-title>{{ recipe.title }}</mat-card-title>
+          <button class="favorite-button" mat-icon-button (click)="toggleFavorite()">
+            <mat-icon>{{ isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
+          </button>
+        </div>
+        <img mat-card-image [src]="recipe.image" alt="{{ recipe.title }}" class="recipe-image">
         <div class="recipe-details">
           <p><strong>Time:</strong> {{ recipe.readyInMinutes }} minutes</p>
           <p><strong>Servings:</strong> {{ recipe.servings }}</p>
@@ -28,7 +41,7 @@
           </ul>
           <div [innerHTML]="sanitizedInstructions"></div>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </mat-card>
+    </div>
   </div>
 </div>
