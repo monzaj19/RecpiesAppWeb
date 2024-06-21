@@ -7,6 +7,7 @@ import {AuthGuard} from "./auth.guard";
 import {UserProfileComponent} from "./user-profile/user-profile.component";
 
 const routes: Routes = [
+  { path: 'recipes', component: MainPageComponent },
   { path: '', component: MainPageComponent, canActivate: [AuthGuard] },
   { path: 'recipe/:id', component: RecipeDetailComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },

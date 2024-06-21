@@ -1,15 +1,19 @@
 <div class="user-profile">
-  <h2>User Profile</h2>
-  <p *ngIf="user$ | async as user">
-    <strong>Name:</strong> {{ user.displayName }}<br>
-    <strong>Email:</strong> {{ user.email }}
-  </p>
+  <div class="user-info">
+    <h2>User Profile</h2>
+    <p *ngIf="user$ | async as user">
+      <strong>Name:</strong> {{ user.displayName }}<br>
+      <strong>Email:</strong> {{ user.email }}
+    </p>
+  </div>
 
-  <h3>Favorites</h3>
-  <div *ngIf="favoriteRecipes.length > 0; else noFavorites">
+  <h3 class="favorites-header">Favorites</h3>
+  <div *ngIf="favoriteRecipes.length > 0; else noFavorites" class="favorites-container">
     <div *ngFor="let recipe of favoriteRecipes" class="recipe-card">
-      <h4>{{ recipe.title }}</h4>
-      <img [src]="recipe.image" alt="{{ recipe.title }}">
+      <a [routerLink]="['/recipe', recipe.id]">
+        <img [src]="recipe.image" alt="{{ recipe.title }}">
+      </a>
+      <h4 class="recipe-title">{{ recipe.title }}</h4>
     </div>
   </div>
   <ng-template #noFavorites>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Observable } from 'rxjs';
 import firebase from 'firebase/compat/app';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-profile',
@@ -12,7 +13,9 @@ export class UserProfileComponent implements OnInit {
   user$: Observable<firebase.User | null>;
   favoriteRecipes: any[] = [];
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private router: Router) {
     this.user$ = this.authService.user$;
   }
 
@@ -27,8 +30,11 @@ export class UserProfileComponent implements OnInit {
   loadFavoriteRecipes(uid: string): void {
     this.authService.getFavorites().subscribe(favorites => {
       this.favoriteRecipes = favorites;
-      console.log('Loaded favorite recipes:', this.favoriteRecipes);
     });
+  }
+
+  viewRecipeDetails(recipeId: number): void {
+    this.router.navigate(['/recipe', recipeId]);
   }
 
 }

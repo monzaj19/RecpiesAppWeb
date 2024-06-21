@@ -18,14 +18,38 @@
   width: 100%
   text-align: center
 
+  .logout-button,
+  .profile-button
+    width: 100%
+    margin-top: 10px
+
 .subscribe-button
   width: 100%
   margin-top: 20px
 
+  @media (max-width: 768px)
+    width: auto
+    margin-top: 0
+
 .content
-  position: relative
+  flex: 1
+  display: flex
+  justify-content: center
+  align-items: flex-start
   padding: 20px
   overflow: auto
+
+  content-background
+  background-color: #f4f4f4
+
+
+  .recipe-container
+    max-width: 800px
+    width: 100%
+    background-color: #444
+    padding: 20px
+    border-radius: 8px
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)
 
   .favorite-button
     position: absolute
